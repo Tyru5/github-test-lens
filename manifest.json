@@ -2,8 +2,8 @@
   "manifest_version": 3,
   "name": "GitHub Test Lens",
   "short_name": "Test Lens",
-  "version": "0.1.0",
-  "description": "Tells test files from production code on GitHub: badges, PR test/prod summary, filters and collapse.",
+  "version": "1.0.0",
+  "description": "Tells test files from production code on GitHub: badges, PR test/prod totals, filters and collapsing of test diffs.",
   "minimum_chrome_version": "116",
   "icons": {
     "16": "icons/icon-16.png",

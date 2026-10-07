@@ -137,3 +137,8 @@ scripts/make-icons.js
 - Code search results are only available to signed-in users, so the search surface needs a GitHub login.
 - The summary counts the files GitHub has rendered so far; very large pull requests load files progressively and the bar updates as they arrive.
 - GitHub Enterprise versions that ship older markup may not expose every surface.
+
+## Releasing
+
+`npm run package` runs the tests, validates the manifest and writes the Chrome Web Store upload to `dist/github-test-lens-<version>.zip`. Store listing copy, privacy answers, screenshots and promo tiles live in `store/`; the step-by-step checklist is `store/RELEASE.md`. The privacy policy is `PRIVACY.md`.
+

@@ -1,0 +1,11 @@
+{
+  "name": "github-test-lens",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Chrome extension (MV3) that tells test files from production code on GitHub",
+  "scripts": {
+    "test": "node --test 'test/**/*.test.js'",
+    "icons": "node scripts/make-icons.js",
+    "package": "node --test 'test/**/*.test.js' && node scripts/package.js"
+  }
+}
