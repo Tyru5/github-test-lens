@@ -19,9 +19,7 @@
 1. Register a developer account at https://chrome.google.com/webstore/devconsole (one-time US$5 fee, 2-Step Verification required). Verify the contact email.
 2. **New item** → upload `dist/github-test-lens-1.0.0.zip`.
 3. Fill the **Store listing**, **Privacy practices** and **Distribution** tabs from `store/LISTING.md`.
-4. **Privacy policy URL:** the store needs a publicly reachable URL. This repository is private, so publish `PRIVACY.md` somewhere public first, for example:
-   - make the repository public and use `https://github.com/Tyru5/github-test-lens/blob/main/PRIVACY.md`, or
-   - publish it as a public gist: `gh gist create --public PRIVACY.md` and use the gist URL.
+4. **Privacy policy URL:** https://github.com/Tyru5/github-test-lens/blob/main/PRIVACY.md (the repository is public).
 5. Submit for review.
 
 ## Store asset specs (already met by the files in `store/`)

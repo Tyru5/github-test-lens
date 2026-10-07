@@ -59,9 +59,9 @@ Works with every GitHub theme: light, dark, dimmed, high contrast and colorblind
 | Small promo tile (440×280) | `promo/small-tile-440x280.png` |
 | Marquee promo tile (1400×560, optional) | `promo/marquee-1400x560.png` |
 
-**Official URL / Homepage URL:** leave empty, or use the repository URL once it is public.
+**Homepage URL:** https://github.com/Tyru5/github-test-lens
 
-**Support URL:** the repository's Issues page once it is public, or an email address.
+**Support URL:** https://github.com/Tyru5/github-test-lens/issues
 
 ## Privacy practices tab
 
@@ -89,7 +89,7 @@ GitHub Test Lens marks which files on GitHub pages are tests and which are produ
 - I do not use or transfer user data for purposes that are unrelated to my item's single purpose.
 - I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
-**Privacy policy URL:** a public URL of `PRIVACY.md` (see RELEASE.md).
+**Privacy policy URL:** https://github.com/Tyru5/github-test-lens/blob/main/PRIVACY.md
 
 ## Distribution tab
 
