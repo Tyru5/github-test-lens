@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>GitHub Test Lens options</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="page">
+    <header class="page-header">
+      <img class="logo" src="../icons/icon-48.png" alt="" width="40" height="40">
+      <div>
+        <h1>GitHub Test Lens</h1>
+        <p class="muted">Options save automatically and follow your Chrome profile.</p>
+      </div>
+    </header>
+
+    <nav class="toc" aria-label="Sections">
+      <a href="#general">General</a>
+      <a href="#behavior">Behavior</a>
+      <a href="#custom-rules">Custom rules</a>
+      <a href="#builtin-rules">Built-in rules</a>
+      <a href="#ghe">Enterprise hosts</a>
+      <a href="#import-export">Import / export</a>
+      <a href="#storage">Storage</a>
+    </nav>
+
+    <div id="save-error" class="banner banner--error" role="alert" hidden>
+      <span id="save-error-text"></span>
+      <button type="button" class="btn btn--small" id="save-retry">Retry</button>
+    </div>
+
+    <main>
+      <section class="card" id="general" aria-labelledby="h-general">
+        <h2 id="h-general">General</h2>
+        <div class="field">
+          <label class="check"><input type="checkbox" data-setting="enabled"><span>Enable Test Lens</span></label>
+          <p class="hint">Turns all badges, rails and summary bars off without touching your settings.</p>
+        </div>
+        <div class="field">
+          <label class="check"><input type="checkbox" data-setting="tint"><span>Tint rails next to test files</span></label>
+          <p class="hint">A thin purple rail on diff headers and file-tree rows.</p>
+        </div>
+        <div class="field">
+          <label class="check"><input type="checkbox" data-setting="summary"><span>Summary bar on diffs</span></label>
+          <p class="hint">Tests vs production counts, filter and collapse controls on pull request, commit and compare pages.</p>
+        </div>
+        <div class="field">
+          <label class="check"><input type="checkbox" data-setting="actionBadge"><span>Toolbar badge with the test share</span></label>
+          <p class="hint">Shows the share of changed lines that are tests on the extension icon while a diff is open.</p>
+        </div>
+        <div class="field">
+          <label class="check"><input type="checkbox" data-setting="hideTestsInTotals"><span>Pull request totals without tests</span></label>
+          <p class="hint">Replaces GitHub's +additions −deletions next to the pull request tabs with totals that leave out test, test-support and benchmark files. Same as the "Exclude tests" button there; on the Files changed tab it also greys out and collapses test files. Reads the pull request's file list from github.com when on.</p>
+        </div>
+        <fieldset class="field">
+          <legend>Badges</legend>
+          <label class="check"><input type="checkbox" data-setting="badges.test"><span>Test files</span></label>
+          <label class="check"><input type="checkbox" data-setting="badges.support"><span>Test support (fixtures, mocks, snapshots, helpers, runner config)</span></label>
+          <label class="check"><input type="checkbox" data-setting="badges.bench"><span>Benchmarks and fuzz targets</span></label>
+          <label class="check"><input type="checkbox" data-setting="badges.prod"><span>Mark production files too</span></label>
+        </fieldset>
+        <fieldset class="field">
+          <legend>Badge labels</legend>
+          <p class="hint">Up to 24 characters. Narrow file-tree rows use one-letter badges (T, S, B, P) instead.</p>
+          <div class="grid">
+            <div class="field">
+              <label for="label-test">Test</label>
+              <input type="text" id="label-test" data-setting="labels.test" maxlength="24" autocomplete="off" aria-describedby="label-test-error">
+              <p class="field-error" id="label-test-error"></p>
+            </div>
+            <div class="field">
+              <label for="label-support">Test support</label>
+              <input type="text" id="label-support" data-setting="labels.support" maxlength="24" autocomplete="off" aria-describedby="label-support-error">
+              <p class="field-error" id="label-support-error"></p>
+            </div>
+            <div class="field">
+              <label for="label-bench">Benchmark</label>
+              <input type="text" id="label-bench" data-setting="labels.bench" maxlength="24" autocomplete="off" aria-describedby="label-bench-error">
+              <p class="field-error" id="label-bench-error"></p>
+            </div>
+            <div class="field">
+              <label for="label-prod">Production</label>
+              <input type="text" id="label-prod" data-setting="labels.prod" maxlength="24" autocomplete="off" aria-describedby="label-prod-error">
+              <p class="field-error" id="label-prod-error"></p>
+            </div>
+          </div>
+        </fieldset>
+      </section>
+
+      <section class="card" id="behavior" aria-labelledby="h-behavior">
+        <h2 id="h-behavior">Behavior</h2>
+        <div class="grid">
+          <div class="field">
+            <label for="auto-collapse">Auto-collapse diffs</label>
+            <select id="auto-collapse" data-setting="autoCollapse">
+              <option value="off">Off</option>
+              <option value="test">Test files</option>
+              <option value="all-tests">Tests, test support and benchmarks</option>
+            </select>
+            <p class="hint">Collapsed with GitHub's own toggle, so you can expand any file as usual.</p>
+          </div>
+          <div class="field">
+            <label for="default-filter">Default filter on diffs</label>
+            <select id="default-filter" data-setting="defaultFilter">
+              <option value="all">All files</option>
+              <option value="prod">Production only</option>
+              <option value="tests">Tests only</option>
+            </select>
+            <p class="hint">The summary bar always says how many files are hidden and offers "Show all".</p>
+          </div>
+        </div>
+        <fieldset class="field">
+          <legend>Where to mark files</legend>
+          <label class="check"><input type="checkbox" data-setting="surfaces.diff"><span>Diffs: pull request files, commits, compare</span></label>
+          <label class="check"><input type="checkbox" data-setting="surfaces.tree"><span>Diff file-tree sidebar</span></label>
+          <label class="check"><input type="checkbox" data-setting="surfaces.repoTree"><span>Repository file browser</span></label>
+          <label class="check"><input type="checkbox" data-setting="surfaces.blob"><span>File view title</span></label>
+          <label class="check"><input type="checkbox" data-setting="surfaces.search"><span>Code search results</span></label>
+        </fieldset>
+      </section>
+
+      <section class="card" id="custom-rules" aria-labelledby="h-custom-rules">
+        <h2 id="h-custom-rules">Custom rules</h2>
+        <p class="hint">Checked before the built-in catalog, top to bottom; the first match wins. Choose "Production (force)" to keep a file out of the test categories. Leave the repository empty to apply everywhere, or scope a rule with <code>owner/name</code> or <code>owner/*</code>.</p>
+        <div class="table-wrap">
+          <table class="rules-table" id="rules-table" hidden>
+            <thead>
+              <tr>
+                <th scope="col">Pattern</th>
+                <th scope="col">Category</th>
+                <th scope="col">Repository</th>
+                <th scope="col">On</th>
+                <th scope="col"><span class="sr-only">Actions</span></th>
+              </tr>
+            </thead>
+            <tbody id="rules-body"></tbody>
+          </table>
+        </div>
+        <p class="muted" id="rules-empty">No custom rules yet. Built-in rules cover most ecosystems; add one when a repository has its own convention.</p>
+        <div class="toolbar">
+          <button type="button" class="btn" id="add-rule">Add rule</button>
+          <span class="muted" id="rules-count"></span>
+        </div>
+        <details class="help">
+          <summary>Pattern syntax</summary>
+          <ul>
+            <li>Globs are case-insensitive: <code>*</code> any run of characters inside a name, <code>?</code> one character, <code>**</code> any number of directories, <code>{a,b}</code> alternatives, <code>[abc]</code> a character set.</li>
+            <li>No <code>/</code> in the pattern: it matches a file or directory <em>name</em> at any depth, for example <code>*.spec.ts</code> or <code>__fixtures__</code>.</li>
+            <li>With a <code>/</code>: it is matched against the full path from the repository root, for example <code>src/**/*_test.go</code> or <code>tests/e2e/**</code>. A trailing <code>/</code> means everything under that directory.</li>
+            <li>Regular expressions are written as <code>/pattern/flags</code>, for example <code>/\.(test|spec)\.m?js$/i</code>, and are tested against the full path. A slash-wrapped pattern with no flags and no regex syntax (<code>/build/</code>) is read as an anchored folder glob.</li>
+          </ul>
+        </details>
+        <div class="try">
+          <h3>Try a path</h3>
+          <div class="grid">
+            <div class="field">
+              <label for="try-path">Path</label>
+              <input type="text" id="try-path" placeholder="src/__tests__/app.test.ts" spellcheck="false" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="try-repo">Repository (optional, for scoped rules)</label>
+              <input type="text" id="try-repo" placeholder="owner/name" spellcheck="false" autocomplete="off">
+            </div>
+          </div>
+          <div class="try-result" id="try-result" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="card" id="builtin-rules" aria-labelledby="h-builtin-rules">
+        <h2 id="h-builtin-rules">Built-in rules</h2>
+        <p class="hint">Uncheck a rule to stop it matching. Custom rules still apply.</p>
+        <div class="toolbar">
+          <label for="rule-search" class="sr-only">Search rules</label>
+          <input type="search" id="rule-search" placeholder="Search by id, description or language" autocomplete="off">
+          <button type="button" class="btn" id="enable-all">Enable all</button>
+          <span class="muted" id="builtin-count"></span>
+        </div>
+        <div id="builtin-list"></div>
+        <p class="muted" id="builtin-none" hidden>No rules match your search.</p>
+      </section>
+
+      <section class="card" id="ghe" aria-labelledby="h-ghe">
+        <h2 id="h-ghe">GitHub Enterprise hosts</h2>
+        <p class="hint">github.com is always on. Add the origin of a GitHub Enterprise Server to mark files there too; Chrome asks for permission to read that site.</p>
+        <ul class="host-list" id="ghe-list"></ul>
+        <p class="muted" id="ghe-empty">No Enterprise hosts.</p>
+        <form class="inline-form" id="ghe-form">
+          <label for="ghe-input" class="sr-only">Host origin</label>
+          <input type="text" id="ghe-input" placeholder="https://github.example.com" spellcheck="false" autocomplete="off" inputmode="url" aria-describedby="ghe-error">
+          <button type="submit" class="btn btn--primary">Add</button>
+        </form>
+        <p class="field-error" id="ghe-error"></p>
+      </section>
+
+      <section class="card" id="import-export" aria-labelledby="h-import-export">
+        <h2 id="h-import-export">Import / export</h2>
+        <p class="hint">Export writes <code>test-lens-settings.json</code> with every setting, custom rule and host. Importing replaces all of them; Enterprise hosts from another computer need their permission granted again.</p>
+        <div class="toolbar">
+          <button type="button" class="btn" id="export">Export settings</button>
+          <label class="file-label" for="import">Import from file</label>
+          <input type="file" id="import" accept=".json,application/json">
+        </div>
+        <p class="field-error" id="io-error"></p>
+      </section>
+
+      <section class="card" id="storage" aria-labelledby="h-storage">
+        <h2 id="h-storage">Storage</h2>
+        <p id="storage-line" class="muted">Measuring…</p>
+        <meter id="storage-meter" min="0" max="102400" value="0" low="81920" high="92160" aria-labelledby="storage-line"></meter>
+        <p class="field-error" id="storage-warn" hidden>Sync storage is nearly full. Remove some custom rules if saving starts to fail.</p>
+        <div class="toolbar">
+          <button type="button" class="btn btn--danger" id="reset">Reset to defaults</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="patterns.js"></script>
+  <script src="classifier.js"></script>
+  <script src="settings.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

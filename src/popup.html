@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>GitHub Test Lens</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="hdr">
+    <img class="hdr__icon" src="../icons/icon-32.png" width="20" height="20" alt="">
+    <h1 class="hdr__title">GitHub Test Lens</h1>
+    <label class="switch">
+      <input type="checkbox" id="enabled" class="switch__input" role="switch" aria-label="Test Lens enabled">
+      <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+      <span class="switch__text" id="enabled-text" aria-hidden="true">On</span>
+    </label>
+  </header>
+
+  <main id="content" class="content" aria-busy="true">
+    <p class="muted">Loading…</p>
+  </main>
+
+  <div id="live" class="sr" aria-live="polite"></div>
+
+  <footer class="ftr">
+    <button type="button" id="btn-options" class="btn">Options</button>
+    <button type="button" id="btn-shortcuts" class="btn">Shortcuts</button>
+    <button type="button" id="btn-rescan" class="btn">Rescan</button>
+  </footer>
+
+  <script src="settings.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,569 @@
+/* GitHub Test Lens — injected styles.
+ * Every rule is namespaced (.ghtl-* or [data-ghtl-*]). Colors resolve through Primer CSS custom
+ * properties (current names, then the legacy --color-* names); the --ghtl-fb-* literals only
+ * matter on hosts without Primer tokens and follow the OS color scheme there.
+ * One hue, two weights: purple ("done") is the one Primer hue diff views do not already spend. */
+
+.ghtl-badge,
+.ghtl-tint,
+.ghtl-summary,
+[data-ghtl-ui] {
+  --ghtl-fb-fg: #1f2328;
+  --ghtl-fb-fg-muted: #59636e;
+  --ghtl-fb-bg: #ffffff;
+  --ghtl-fb-bg-muted: #f6f8fa;
+  --ghtl-fb-neutral: #eff2f5;
+  --ghtl-fb-border: #d0d7de;
+  --ghtl-fb-done-fg: #8250df;
+  --ghtl-fb-done-bg: #fbefff;
+  --ghtl-fb-done-border: #8250df;
+  --ghtl-fb-done-muted: #d8b9ff;
+  --ghtl-fb-accent-fg: #0969da;
+  --ghtl-fb-accent-bg: #ddf4ff;
+  --ghtl-fb-attention-fg: #9a6700;
+  --ghtl-fb-attention-bg: #fff8c5;
+  --ghtl-fb-attention-border: #bf8700;
+  --ghtl-fb-success: #1a7f37;
+  --ghtl-fb-danger: #d1242f;
+}
+
+@media (prefers-color-scheme: dark) {
+  .ghtl-badge,
+  .ghtl-tint,
+  .ghtl-summary,
+  [data-ghtl-ui] {
+    --ghtl-fb-fg: #f0f6fc;
+    --ghtl-fb-fg-muted: #9198a1;
+    --ghtl-fb-bg: #0d1117;
+    --ghtl-fb-bg-muted: #151b23;
+    --ghtl-fb-neutral: #262c36;
+    --ghtl-fb-border: #3d444d;
+    --ghtl-fb-done-fg: #ab7df8;
+    --ghtl-fb-done-bg: #271052;
+    --ghtl-fb-done-border: #8957e5;
+    --ghtl-fb-done-muted: #553098;
+    --ghtl-fb-accent-fg: #58a6ff;
+    --ghtl-fb-accent-bg: #122a4f;
+    --ghtl-fb-attention-fg: #d29922;
+    --ghtl-fb-attention-bg: #3a2d12;
+    --ghtl-fb-attention-border: #9e6a03;
+    --ghtl-fb-success: #3fb950;
+    --ghtl-fb-danger: #f85149;
+  }
+}
+
+/* ---- badges ------------------------------------------------------------------------------ */
+
+.ghtl-badge {
+  --ghtl-c: var(--fgColor-done, var(--color-done-fg, var(--ghtl-fb-done-fg)));
+  --ghtl-bg: var(--bgColor-done-muted, var(--color-done-subtle, var(--ghtl-fb-done-bg)));
+  --ghtl-b: var(--borderColor-done-emphasis, var(--color-done-emphasis, var(--ghtl-fb-done-border)));
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  box-sizing: border-box;
+  height: 18px;
+  margin-left: 8px;
+  padding: 0 6px;
+  border-radius: 2em;
+  border: 1px solid var(--ghtl-b);
+  background: var(--ghtl-bg);
+  color: var(--ghtl-c);
+  font: 600 10px/16px var(--fontStack-sansSerif, system-ui, -apple-system, "Segoe UI", sans-serif);
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  cursor: default;
+}
+
+.ghtl-badge--test {
+  /* filled: the strong weight */
+}
+
+.ghtl-badge--support {
+  background: transparent;
+  border-color: var(--ghtl-b);
+}
+
+.ghtl-badge--bench {
+  background: transparent;
+  border-style: dashed;
+}
+
+.ghtl-badge--prod {
+  --ghtl-c: var(--fgColor-muted, var(--color-fg-muted, var(--ghtl-fb-fg-muted)));
+  --ghtl-bg: var(--bgColor-neutral-muted, var(--color-neutral-muted, var(--ghtl-fb-neutral)));
+  --ghtl-b: transparent;
+}
+
+.ghtl-badge--compact {
+  justify-content: center;
+  height: 16px;
+  min-width: 16px;
+  padding: 0 4px;
+  margin-left: 6px;
+  font-size: 9px;
+  line-height: 14px;
+}
+
+.ghtl-badge__text {
+  display: inline-block;
+}
+
+.ghtl-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- rails: a 3px background-image so GitHub's sticky header shadows and borders stay untouched */
+
+.ghtl-tint {
+  background-image: linear-gradient(var(--ghtl-rail), var(--ghtl-rail));
+  background-size: 3px 100%;
+  background-repeat: no-repeat;
+  background-position: left top;
+}
+
+.ghtl-tint--test {
+  --ghtl-rail: var(--borderColor-done-emphasis, var(--color-done-emphasis, var(--ghtl-fb-done-border)));
+}
+
+.ghtl-tint--support,
+.ghtl-tint--bench {
+  --ghtl-rail: var(--borderColor-done-muted, var(--color-done-muted, var(--ghtl-fb-done-muted)));
+}
+
+/* ---- filter: hide whole diff blocks; tree rows only dim ------------------------------------ */
+
+[data-ghtl-filter="prod"] [data-ghtl-file="test"],
+[data-ghtl-filter="prod"] [data-ghtl-file="support"],
+[data-ghtl-filter="prod"] [data-ghtl-file="bench"],
+[data-ghtl-filter="tests"] [data-ghtl-file="prod"] {
+  display: none !important;
+}
+
+.ghtl-dimmed {
+  opacity: .6;
+}
+
+/* ---- summary bar -------------------------------------------------------------------------- */
+
+.ghtl-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  min-height: 32px;
+  margin: 0 0 12px;
+  padding: 6px 12px;
+  box-sizing: border-box;
+  border: 1px solid var(--borderColor-default, var(--color-border-default, var(--ghtl-fb-border)));
+  border-radius: 6px;
+  background: var(--bgColor-muted, var(--color-canvas-subtle, var(--ghtl-fb-bg-muted)));
+  color: var(--fgColor-default, var(--color-fg-default, var(--ghtl-fb-fg)));
+  font: 400 12px/18px var(--fontStack-sansSerif, system-ui, -apple-system, "Segoe UI", sans-serif);
+}
+
+.ghtl-summary [hidden] {
+  display: none !important;
+}
+
+.ghtl-summary__stats {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 0;
+}
+
+.ghtl-stat {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.ghtl-stat + .ghtl-stat::before {
+  content: "\00b7";
+  margin: 0 8px;
+  color: var(--fgColor-muted, var(--color-fg-muted, var(--ghtl-fb-fg-muted)));
+}
+
+.ghtl-stat__label {
+  font-weight: 600;
+}
+
+.ghtl-stat__files,
+.ghtl-num,
+.ghtl-summary__share,
+.ghtl-summary__note {
+  font-variant-numeric: tabular-nums;
+}
+
+.ghtl-num--add {
+  color: var(--fgColor-success, var(--color-success-fg, var(--ghtl-fb-success)));
+}
+
+.ghtl-num--del {
+  color: var(--fgColor-danger, var(--color-danger-fg, var(--ghtl-fb-danger)));
+}
+
+.ghtl-summary__share,
+.ghtl-summary__note {
+  color: var(--fgColor-muted, var(--color-fg-muted, var(--ghtl-fb-fg-muted)));
+  white-space: nowrap;
+}
+
+.ghtl-summary__note {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ghtl-summary__controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+/* chips */
+
+.ghtl-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-sizing: border-box;
+  height: 22px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: 2em;
+  font-weight: 500;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.ghtl-chip--warn {
+  background: var(--bgColor-attention-muted, var(--color-attention-subtle, var(--ghtl-fb-attention-bg)));
+  color: var(--fgColor-attention, var(--color-attention-fg, var(--ghtl-fb-attention-fg)));
+  border-color: var(--borderColor-attention-emphasis, var(--color-attention-emphasis, var(--ghtl-fb-attention-border)));
+}
+
+/* buttons: reset GitHub's globals, then Primer-like default / link / toggle variants */
+
+.ghtl-summary button {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.ghtl-btn {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: 24px;
+  padding: 0 10px;
+  border: 1px solid var(--borderColor-default, var(--color-border-default, var(--ghtl-fb-border)));
+  border-radius: 6px;
+  background: var(--bgColor-default, var(--color-canvas-default, var(--ghtl-fb-bg)));
+  color: var(--fgColor-default, var(--color-fg-default, var(--ghtl-fb-fg)));
+  font-weight: 500;
+  line-height: 22px;
+  white-space: nowrap;
+  transition: background-color 80ms linear, color 80ms linear;
+}
+
+.ghtl-btn:hover {
+  background: var(--bgColor-neutral-muted, var(--color-neutral-muted, var(--ghtl-fb-neutral)));
+}
+
+.ghtl-btn--toggle[aria-pressed="true"] {
+  background: var(--bgColor-accent-muted, var(--color-accent-subtle, var(--ghtl-fb-accent-bg)));
+  color: var(--fgColor-accent, var(--color-accent-fg, var(--ghtl-fb-accent-fg)));
+  border-color: var(--borderColor-accent-emphasis, var(--color-accent-emphasis, var(--ghtl-fb-accent-fg)));
+}
+
+.ghtl-btn--link {
+  height: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background: none;
+  color: var(--fgColor-accent, var(--color-accent-fg, var(--ghtl-fb-accent-fg)));
+  font-weight: 500;
+  line-height: inherit;
+}
+
+.ghtl-btn--link:hover {
+  background: none;
+  text-decoration: underline;
+}
+
+/* segmented control (radiogroup) */
+
+.ghtl-seg {
+  display: inline-flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  height: 24px;
+  border: 1px solid var(--borderColor-default, var(--color-border-default, var(--ghtl-fb-border)));
+  border-radius: 6px;
+  background: var(--bgColor-default, var(--color-canvas-default, var(--ghtl-fb-bg)));
+  overflow: hidden;
+}
+
+.ghtl-seg__item {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 10px;
+  border: 0;
+  border-left: 1px solid var(--borderColor-default, var(--color-border-default, var(--ghtl-fb-border)));
+  background: transparent;
+  color: var(--fgColor-muted, var(--color-fg-muted, var(--ghtl-fb-fg-muted)));
+  font-weight: 500;
+  line-height: 22px;
+  white-space: nowrap;
+  transition: background-color 80ms linear, color 80ms linear;
+}
+
+.ghtl-seg__item:first-child {
+  border-left: 0;
+}
+
+.ghtl-seg__item:hover {
+  background: var(--bgColor-neutral-muted, var(--color-neutral-muted, var(--ghtl-fb-neutral)));
+  color: var(--fgColor-default, var(--color-fg-default, var(--ghtl-fb-fg)));
+}
+
+.ghtl-seg__item[aria-checked="true"] {
+  background: var(--bgColor-accent-muted, var(--color-accent-subtle, var(--ghtl-fb-accent-bg)));
+  color: var(--fgColor-accent, var(--color-accent-fg, var(--ghtl-fb-accent-fg)));
+  font-weight: 600;
+}
+
+/* focus rings: 2px solid, drawn inside the control so overflow: hidden never clips them */
+
+.ghtl-summary button:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 2px solid var(--focus-outlineColor, var(--color-accent-fg, var(--ghtl-fb-accent-fg)));
+  outline-offset: -2px;
+}
+
+.ghtl-summary .ghtl-btn--link:focus-visible {
+  outline-offset: 2px;
+}
+
+/* ---- system preferences ------------------------------------------------------------------- */
+
+@media (forced-colors: active) {
+  .ghtl-badge {
+    forced-color-adjust: none;
+    border: 1px solid CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+
+  .ghtl-badge--test {
+    background: CanvasText;
+    color: Canvas;
+  }
+
+  .ghtl-badge--bench {
+    border-style: dashed;
+  }
+
+  .ghtl-tint {
+    background-image: none;
+    outline: 1px solid CanvasText;
+    outline-offset: -1px;
+  }
+
+  .ghtl-seg__item[aria-checked="true"],
+  .ghtl-btn--toggle[aria-pressed="true"] {
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+    border-color: Highlight;
+  }
+
+  .ghtl-summary button:focus-visible {
+    outline-color: CanvasText;
+  }
+
+  .ghtl-seg__item[aria-checked="true"]:focus-visible,
+  .ghtl-btn--toggle[aria-pressed="true"]:focus-visible {
+    outline-color: HighlightText;
+  }
+
+  .ghtl-dimmed {
+    opacity: 1;
+    text-decoration: line-through;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ghtl-summary *,
+  .ghtl-badge {
+    transition: none !important;
+  }
+}
+
+/* Diffs GitHub has not rendered yet (lazy-loaded React view): line totals are partial. */
+.ghtl-summary__pending {
+  color: var(--fgColor-muted, var(--color-fg-muted, var(--ghtl-fb-fg-muted)));
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- PR header: totals without tests ----------------------------------------------------------- */
+
+html [data-ghtl-totals-hidden][data-ghtl-totals-hidden] {
+  display: none !important;
+}
+
+.ghtl-totals {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 8px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.ghtl-totals__stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.ghtl-totals__stat[hidden] {
+  display: none;
+}
+
+.ghtl-totals__add {
+  color: var(--fgColor-success, var(--color-success-fg, var(--ghtl-fb-success)));
+}
+
+.ghtl-totals__del {
+  color: var(--fgColor-danger, var(--color-danger-fg, var(--ghtl-fb-danger)));
+}
+
+.ghtl-totals__squares {
+  display: inline-flex;
+  gap: 1px;
+  margin-left: 2px;
+}
+
+.ghtl-sq {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 1px;
+}
+
+.ghtl-sq--add {
+  background: var(--bgColor-success-emphasis, var(--color-success-emphasis, var(--ghtl-fb-success)));
+}
+
+.ghtl-sq--del {
+  background: var(--bgColor-danger-emphasis, var(--color-danger-emphasis, var(--ghtl-fb-danger)));
+}
+
+.ghtl-sq--neutral {
+  background: var(--bgColor-neutral-muted, var(--color-neutral-muted, var(--ghtl-fb-neutral)));
+}
+
+.ghtl-totals__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-sizing: border-box;
+  height: 22px;
+  padding: 0 8px;
+  border: 1px solid var(--borderColor-default, var(--color-border-default, var(--ghtl-fb-border)));
+  border-radius: 6px;
+  background: var(--bgColor-default, var(--color-canvas-default, var(--ghtl-fb-bg)));
+  color: var(--fgColor-muted, var(--color-fg-muted, var(--ghtl-fb-fg-muted)));
+  font: 500 12px/20px var(--fontStack-sansSerif, system-ui, sans-serif);
+  cursor: pointer;
+}
+
+.ghtl-totals__btn:hover {
+  background: var(--bgColor-neutral-muted, var(--color-neutral-muted, var(--ghtl-fb-neutral)));
+  color: var(--fgColor-default, var(--color-fg-default, var(--ghtl-fb-fg)));
+}
+
+.ghtl-totals__btn[aria-pressed="true"] {
+  background: var(--bgColor-accent-muted, var(--color-accent-subtle, var(--ghtl-fb-accent-bg)));
+  color: var(--fgColor-accent, var(--color-accent-fg, var(--ghtl-fb-accent-fg)));
+  border-color: var(--borderColor-accent-emphasis, var(--color-accent-emphasis, var(--ghtl-fb-accent-fg)));
+}
+
+.ghtl-totals__btn[aria-busy="true"] {
+  cursor: progress;
+  opacity: .7;
+}
+
+.ghtl-totals__btn:focus-visible {
+  outline: 2px solid var(--focus-outlineColor, var(--color-accent-fg, var(--ghtl-fb-accent-fg)));
+  outline-offset: 1px;
+}
+
+.ghtl-totals__icon {
+  flex: none;
+}
+
+@media (forced-colors: active) {
+  .ghtl-sq {
+    forced-color-adjust: none;
+    border: 1px solid CanvasText;
+  }
+
+  .ghtl-totals__btn[aria-pressed="true"] {
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+    border-color: Highlight;
+  }
+}
+
+/* "Exclude tests" on a pull request's Files tab: test-related diffs are greyed out (and collapsed). */
+.ghtl-excluded {
+  opacity: .55;
+  filter: grayscale(1);
+  transition: opacity 80ms linear;
+}
+
+.ghtl-excluded:hover,
+.ghtl-excluded:focus-within {
+  opacity: .85;
+}
+
+@media (forced-colors: active) {
+  .ghtl-excluded {
+    opacity: 1;
+    filter: none;
+    text-decoration: line-through;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ghtl-excluded {
+    transition: none;
+  }
+}
